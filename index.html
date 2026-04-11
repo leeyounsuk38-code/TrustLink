@@ -55,31 +55,63 @@
   <img src="ui.png" width="90%" style="max-width:900px; border-radius:20px;">
 
   <script>
-    async function searchToken() {
-      const input = document.getElementById("searchInput").value.toLowerCase().trim();
-      const res = await fetch("data/tokens.json");
-      const data = await res.json();
+  async function searchToken() {
+    const input = document.getElementById("searchInput").value.toLowerCase().trim();
+    const res = await fetch("data/tokens.json");
+    const data = await res.json();
 
-      const found = data.find(t => t.name.toLowerCase().includes(input));
+    const found = data.find(t => t.name.toLowerCase().includes(input));
+    const box = document.getElementById("resultBox");
 
-      const box = document.getElementById("resultBox");
+    if (found) {
+      let cardColor = "#e8f8ec";
+      let borderColor = "#4CAF50";
+      let titleText = "✅ Verified Token";
+      let riskText = "LOW";
 
-      if (found) {
-        box.innerHTML = `
-          <div style="text-align:left; margin-top:10px;">
-            <h3>${found.name}</h3>
-            <p><strong>Symbol:</strong> ${found.symbol}</p>
-            <p><strong>Network:</strong> ${found.network}</p>
-            <p><strong>Issuer:</strong> ${found.issuer}</p>
-            <p><strong>Status:</strong> ${found.verification_status}</p>
-            <p><strong>Trust Score:</strong> ${found.trust_score}</p>
-            <p><strong>Risk Level:</strong> ${found.risk_level}</p>
-          </div>
-        `;
-      } else {
-        box.innerHTML = `<p>❌ Token not found</p>`;
+      if (found.risk_level === "high") {
+        cardColor = "#fdecec";
+        borderColor = "#e53935";
+        titleText = "⚠ Warning: Suspicious Token";
+        riskText = "HIGH";
       }
+
+      box.innerHTML = `
+        <div style="
+          background:${cardColor};
+          border:2px solid ${borderColor};
+          border-radius:16px;
+          padding:20px;
+          text-align:left;
+          margin-top:20px;
+          box-shadow:0 6px 18px rgba(0,0,0,0.08);
+        ">
+          <h3 style="margin-top:0; color:${borderColor};">${titleText}</h3>
+          <p><strong>Name:</strong> ${found.name}</p>
+          <p><strong>Symbol:</strong> ${found.symbol}</p>
+          <p><strong>Network:</strong> ${found.network}</p>
+          <p><strong>Issuer:</strong> ${found.issuer}</p>
+          <p><strong>Status:</strong> ${found.verification_status}</p>
+          <p><strong>Trust Score:</strong> ${found.trust_score}</p>
+          <p><strong>Risk Level:</strong> ${riskText}</p>
+        </div>
+      `;
+    } else {
+      box.innerHTML = `
+        <div style="
+          background:#fff4e5;
+          border:2px solid #ff9800;
+          border-radius:16px;
+          padding:20px;
+          margin-top:20px;
+          color:#cc7a00;
+          font-weight:bold;
+        ">
+          ❌ Token not found
+        </div>
+      `;
     }
+  }
   </script>
 
 </body>
