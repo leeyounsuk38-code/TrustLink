@@ -10,8 +10,10 @@ A Web3 safety solution for identifying verified tokens across Stellar and XRPL
 Many wallets contain fake or misleading assets, making it difficult for users to distinguish real tokens.
 This creates financial risk and reduces trust in the Web3 ecosystem.
 
-📱 UI Preview
-
+## 📱 UI Preview
+<p align="center">
+  <img src="ui.png" width="800"/>
+</p>
 
 ## ✅ Solution
 TrustLink provides a simple verification system that allows users to:
