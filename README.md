@@ -2,8 +2,6 @@
   <img src="logo.png" width="200"/>
 </p>
 
-<h1 align="center">TrustLink 🔗</h1>
-
 <p align="center">
 A Web3 safety solution for identifying verified tokens across Stellar and XRPL
 </p>
