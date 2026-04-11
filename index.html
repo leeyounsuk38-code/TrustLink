@@ -1,52 +1,41 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>TrustLink</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+<body style="
+  margin:0;
+  font-family:Arial;
+  background: url('ui.png') no-repeat center center fixed;
+  background-size: cover;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+">
 
-<body style="text-align:center; font-family:Arial; padding:40px;">
+  <div style="
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    width:300px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  ">
 
-  <img src="logo.png" width="200"><br><br>
+    <img src="logo.png" width="120"><br><br>
 
-  <h1>TrustLink 🔗</h1>
-  <p>Web3 Token Verification Platform</p>
+    <h2>TrustLink 🔗</h2>
 
-  <br>
+    <input id="searchInput" placeholder="Search token"
+      style="padding:10px; width:80%; margin-top:10px;">
 
-  <input id="searchInput" placeholder="Enter token name" style="padding:10px; width:200px;">
-  <button onclick="searchToken()" style="padding:10px;">Search</button>
+    <br><br>
 
-  <br><br>
+    <button onclick="searchToken()" style="
+      padding:10px 20px;
+      background:#4CAF50;
+      color:white;
+      border:none;
+      border-radius:10px;
+    ">Search</button>
 
-  <div id="resultBox">
-    <p>Search result will appear here</p>
+    <div id="resultBox" style="margin-top:20px;"></div>
+
   </div>
-
-  <script>
-    async function searchToken() {
-      const input = document.getElementById("searchInput").value.toLowerCase();
-      const res = await fetch("data/tokens.json");
-      const data = await res.json();
-
-      const found = data.find(t => t.name.toLowerCase().includes(input));
-
-      const box = document.getElementById("resultBox");
-
-      if (found) {
-        box.innerHTML = `
-          <h2>${found.name}</h2>
-          <p>Network: ${found.network}</p>
-          <p>Status: ${found.verification_status}</p>
-          <p>Score: ${found.trust_score}</p>
-          <p>Risk: ${found.risk_level}</p>
-        `;
-      } else {
-        box.innerHTML = "<p>❌ Token not found</p>";
-      }
-    }
-  </script>
-
 </body>
-</html>
