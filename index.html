@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>TrustLink</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 
+<body style="text-align:center; font-family:Arial; padding:40px;">
+
+  <img src="logo.png" width="200"><br><br>
+
+  <h1>TrustLink 🔗</h1>
+  <p>Web3 Token Verification Platform</p>
+
+  <br>
+
+  <input id="searchInput" placeholder="Enter token name" style="padding:10px; width:200px;">
+  <button onclick="searchToken()" style="padding:10px;">Search</button>
+
+  <br><br>
+
+  <div id="resultBox">
+    <p>Search result will appear here</p>
+  </div>
+
+  <script>
+    async function searchToken() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const res = await fetch("data/tokens.json");
+      const data = await res.json();
+
+      const found = data.find(t => t.name.toLowerCase().includes(input));
+
+      const box = document.getElementById("resultBox");
+
+      if (found) {
+        box.innerHTML = `
+          <h2>${found.name}</h2>
+          <p>Network: ${found.network}</p>
+          <p>Status: ${found.verification_status}</p>
+          <p>Score: ${found.trust_score}</p>
+          <p>Risk: ${found.risk_level}</p>
+        `;
+      } else {
+        box.innerHTML = "<p>❌ Token not found</p>";
+      }
+    }
+  </script>
+
+</body>
+</html>
