@@ -29,10 +29,11 @@
     box-shadow:0 10px 30px rgba(0,0,0,0.12);
   ">
     <input
-      id="searchInput"
-      placeholder="Search token"
-      style="padding:12px; width:80%; max-width:260px; font-size:16px;"
-    >
+  id="searchInput"
+  placeholder="Search token"
+  onkeypress="if(event.key==='Enter') searchToken()"
+  style="padding:12px; width:80%; max-width:260px; font-size:16px;"
+>
     <br><br>
     <button
       onclick="searchToken()"
@@ -64,7 +65,8 @@
 
     const found = data.find(t => t.name.toLowerCase().includes(input));
     const box = document.getElementById("resultBox");
-
+    box.innerHTML = "🔍 Searching...";
+    
     if (found) {
       let cardColor = "#e8f8ec";
       let borderColor = "#4CAF50";
