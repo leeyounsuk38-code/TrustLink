@@ -1,41 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>TrustLink</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
 <body style="
   margin:0;
-  font-family:Arial;
-  background: url('ui.png') no-repeat center center fixed;
-  background-size: cover;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
+  font-family:Arial, sans-serif;
+  background:#f5f7fb;
+  text-align:center;
+  padding:30px 20px;
 ">
+
+  <img src="logo.png" width="220" style="margin-top:20px;"><br><br>
+
+  <h1 style="margin:10px 0;">TrustLink 🔗</h1>
+  <p style="margin-bottom:30px;">Web3 Token Verification Platform</p>
 
   <div style="
     background:white;
-    padding:30px;
+    padding:25px;
     border-radius:20px;
-    text-align:center;
-    width:300px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    max-width:380px;
+    margin:0 auto 30px auto;
+    box-shadow:0 10px 30px rgba(0,0,0,0.12);
   ">
-
-    <img src="logo.png" width="120"><br><br>
-
-    <h2>TrustLink 🔗</h2>
-
-    <input id="searchInput" placeholder="Search token"
-      style="padding:10px; width:80%; margin-top:10px;">
-
+    <input
+      id="searchInput"
+      placeholder="Search token"
+      style="padding:12px; width:80%; max-width:260px; font-size:16px;"
+    >
     <br><br>
+    <button
+      onclick="searchToken()"
+      style="
+        padding:12px 22px;
+        background:#4CAF50;
+        color:white;
+        border:none;
+        border-radius:10px;
+        font-size:16px;
+      "
+    >
+      Search
+    </button>
 
-    <button onclick="searchToken()" style="
-      padding:10px 20px;
-      background:#4CAF50;
-      color:white;
-      border:none;
-      border-radius:10px;
-    ">Search</button>
-
-    <div id="resultBox" style="margin-top:20px;"></div>
-
+    <div id="resultBox" style="margin-top:20px;">
+      <p>Search result will appear here</p>
+    </div>
   </div>
+
+  <h2 style="margin-top:10px;">UI Preview</h2>
+  <img src="ui.png" width="90%" style="max-width:900px; border-radius:20px;">
+
+  <script>
+    async function searchToken() {
+      const input = document.getElementById("searchInput").value.toLowerCase().trim();
+      const res = await fetch("data/tokens.json");
+      const data = await res.json();
+
+      const found = data.find(t => t.name.toLowerCase().includes(input));
+
+      const box = document.getElementById("resultBox");
+
+      if (found) {
+        box.innerHTML = `
+          <div style="text-align:left; margin-top:10px;">
+            <h3>${found.name}</h3>
+            <p><strong>Symbol:</strong> ${found.symbol}</p>
+            <p><strong>Network:</strong> ${found.network}</p>
+            <p><strong>Issuer:</strong> ${found.issuer}</p>
+            <p><strong>Status:</strong> ${found.verification_status}</p>
+            <p><strong>Trust Score:</strong> ${found.trust_score}</p>
+            <p><strong>Risk Level:</strong> ${found.risk_level}</p>
+          </div>
+        `;
+      } else {
+        box.innerHTML = `<p>❌ Token not found</p>`;
+      }
+    }
+  </script>
+
 </body>
+</html>
