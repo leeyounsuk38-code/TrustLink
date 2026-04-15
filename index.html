@@ -63,7 +63,10 @@
     const res = await fetch("data/tokens.json");
     const data = await res.json();
 
-    const found = data.find(t => t.name.toLowerCase().includes(input));
+    const found = data.find(t =>
+    t.name.toLowerCase().includes(input) ||
+    t.symbol.toLowerCase().includes(input)
+    );
     const box = document.getElementById("resultBox");
     box.innerHTML = "🔍 Searching...";
     
