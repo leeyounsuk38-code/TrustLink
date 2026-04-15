@@ -63,14 +63,14 @@
     const res = await fetch("data/tokens.json");
     const data = await res.json();
 
-    const found = data.find(t =>
+    const results = data.filter(t =>
     t.name.toLowerCase().includes(input) ||
     t.symbol.toLowerCase().includes(input)
     );
     const box = document.getElementById("resultBox");
     box.innerHTML = "🔍 Searching...";
     
-    if (found) {
+    if (results.length > 0) {
       let cardColor = "#e8f8ec";
       let borderColor = "#4CAF50";
       let titleText = "✅ Verified Token";
@@ -83,26 +83,45 @@
         riskText = "HIGH";
       }
 
-      box.innerHTML = `
-        <div style="
-          background:${cardColor};
-          border:2px solid ${borderColor};
-          border-radius:16px;
-          padding:20px;
-          text-align:left;
-          margin-top:20px;
-          box-shadow:0 6px 18px rgba(0,0,0,0.08);
-        ">
-          <h3 style="margin-top:0; color:${borderColor};">${titleText}</h3>
-          <p><strong>Name:</strong> ${found.name}</p>
-          <p><strong>Symbol:</strong> ${found.symbol}</p>
-          <p><strong>Network:</strong> ${found.network}</p>
-          <p><strong>Issuer:</strong> ${found.issuer}</p>
-          <p><strong>Status:</strong> ${found.verification_status}</p>
-          <p><strong>Trust Score:</strong> ${found.trust_score}</p>
-          <p><strong>Risk Level:</strong> ${riskText}</p>
-        </div>
-      `;
+      let html = "";
+
+results.forEach(found => {
+  let cardColor = "#e8f8ec";
+  let borderColor = "#4CAF50";
+  let titleText = "✅ Verified Token";
+  let riskText = "LOW";
+
+  if (found.risk_level === "high") {
+    cardColor = "#fdecec";
+    borderColor = "#e53935";
+    titleText = "⚠ Warning: Suspicious Token";
+    riskText = "HIGH";
+  }
+
+  html += `
+    <div style="
+      background:${cardColor};
+      border:2px solid ${borderColor};
+      border-radius:16px;
+      padding:20px;
+      text-align:left;
+      margin-top:20px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.08);
+    ">
+      <h3 style="margin-top:0; color:${borderColor};">${titleText}</h3>
+      <p><strong>Name:</strong> ${found.name}</p>
+      <p><strong>Symbol:</strong> ${found.symbol}</p>
+      <p><strong>Network:</strong> ${found.network}</p>
+      <p><strong>Issuer:</strong> ${found.issuer}</p>
+      <p><strong>Status:</strong> ${found.verification_status}</p>
+      <p><strong>Trust Score:</strong> ${found.trust_score}</p>
+      <p><strong>Risk Level:</strong> ${riskText}</p>
+    </div>
+    `;
+  });
+
+  box.innerHTML = html;
+
     } else {
       box.innerHTML = `
         <div style="
