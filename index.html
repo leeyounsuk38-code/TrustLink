@@ -30,16 +30,16 @@
   ">
     <input
   id="searchInput"
-  placeholder="Search token"
-  <div id="suggestBox" style="
-  max-width:260px;
-  margin:10px auto;
-  text-align:left;
-"></div>    
+  placeholder="Search token"  
   oninput="searchToken()"
   onkeypress="if(event.key==='Enter') searchToken()"
   style="padding:12px; width:80%; max-width:260px; font-size:16px;"
 >
+    <div id="suggestBox" style="
+  max-width:260px;
+  margin:10px auto;
+  text-align:left;
+"></div>
     <br><br>
     <button
       onclick="searchToken()"
