@@ -61,6 +61,10 @@
   <script>
   async function searchToken() {
   const input = document.getElementById("searchInput").value.trim().toLowerCase();
+  if (input.length < 2) {
+  document.getElementById("resultBox").innerHTML = "";
+  return;
+}
   const res = await fetch("data/tokens.json?v=2");
   const data = await res.json();
 
